@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./libs/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./libs/css/bootstrap.min.css">
+    <title>Negociações</title>
+</head>
+<body class="container">
+    <h1 class="text-center">Negociações</h1>
+
+    <form class="form">
+        <div class="form-group">
+            <label for="data">Data</label>
+            <input type="date" id="data" class="form-control" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="quantidade">Quantidade</label>
+            <input type="number" min="1" step="1" id="quantidade" class="form-control" value="1" required>
+        </div>
+        <div class="form-group">
+            <label for="valor">Valor</label>
+            <input type="number" id="valor" class="form-control" min="0.01" step="0.01" value="0.0" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Incluir</button>
+    </form>
+    <div class="text-center">
+        <button type="button" id="botao-importa" class="btn btn-primary text-center">Importar Negociações</button>
+        <button type="button" id="botao-apaga" class="btn btn-primary text-center">Apagar</button>
+    </div>
+    <br>
+    <br>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>DATA</th>
+                <th>QUANTIDADE</th>
+                <th>VALOR</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+    </table>
+    <footer>
+        <script src="./libs/js/jquery.min.js"></script>
+        <script src="./libs/js/bootstrap.min.js"></script>
+
+        <script src="./app/domain/negociacao/Negociacao.js"></script>
+        <script src="./app/controllers/NegociacaoController.js"></script>
+        <script src="./app/ui/converters/DateConverter.js"></script>
+        <script src="./app/domain/negociacao/Negociacoes.js"></script>
+        <script src="./app/app.js"></script>
+    </footer>
+</body>
+</html>
