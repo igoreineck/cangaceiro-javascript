@@ -1,38 +1,50 @@
 class NegociacaoController {
-    constructor() {
-        let $ = document.querySelector.bind(document);
-        this._inputData = $('#data');
-        this._inputQuantidade = $('#quantidade');
-        this._inputValor = $('#valor');
-        this._negociacoes = new Negociacoes();
-    }
+  constructor() {
+    const $ = document.querySelector.bind(document);
+    this._inputData = $('#data');
+    this._inputQuantidade = $('#quantidade');
+    this._inputValor = $('#valor');
+    this._negociacoes = ProxyFactory.create(
+      new Negociacoes(),
+      new NegociacoesView('#negociacoes'),
+      ['adiciona', 'esvazia']
+    )
 
-    _limpaFormulario() {
-        this._inputData.value = '';
-        this._inputQuantidade.value = 1;
-        this._inputValor.value = 0.0;
-        this._inputData.focus();
-    }
+    this._negociacoesView = new NegociacoesView('#negociacoes');
+    this._negociacoesView.update(this._negociacoes);
+    this._mensagem = ProxyFactory.create(
+      new Mensagem(),
+      new MensagemView('#mensagemView'),
+      ['texto']
+    )
+    this._mensagemView = new MensagemView('#mensagemView');
+    this._mensagemView.update(this._mensagem);
+  }
 
-    _criaNegociacao() {
-        return new Negociacao(
-            DateConverter.paraData(this._inputData.value),
-            parseInt(this._inputQuantidade.value),
-            parseFloat(this._inputValor.value)
-        )
-    }
+  _limpaFormulario() {
+    this._inputData.value = '';
+    this._inputQuantidade.value = 1;
+    this._inputValor.value = 0.0;
+    this._inputData.focus();
+  }
 
-    adiciona(event) {
-        event.preventDefault();
-        this._negociacoes.adiciona(this._criaNegociacao());
-        this._limpaFormulario();
+  _criaNegociacao() {
+    return new Negociacao(
+      DateConverter.paraData(this._inputData.value),
+      parseInt(this._inputQuantidade.value),
+      parseFloat(this._inputValor.value)
+    )
+  }
 
-        let negociacao = new Negociacao(
-            DateConverter.paraData(this._inputData.value),
-            parseInt(this._inputQuantidade.value),
-            parseFloat(this._inputValor.value)
-        );
-        // let diaMesAno = DateConverter.paraTexto(negociacao.data);
+  adiciona(event) {
+    event.preventDefault();
+    this._negociacoes.adiciona(this._criaNegociacao());
+    this._mensagem.texto = 'Negociação adicionada com sucesso';
+    this._limpaFormulario();
+  }
 
-    }
+  apaga() {
+    this._negociacoes.esvazia();
+    this._mensagem.texto = 'Negociações apagadas com sucesso';
+  }
 }
